@@ -1,0 +1,22 @@
+name: 'Notify Slack'
+description: 'Send Slack notifications for GitHub Actions workflows'
+inputs:
+  status:
+    description: 'Workflow status to report (success or failure)'
+    required: true
+  webhook_url:
+    description: 'Slack webhook URL'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Notify Slack
+      uses: slackapi/slack-github-action@v1.26.0
+      with:
+        payload: |
+          {
+            "text": "${{ inputs.status == 'success' ? '🟢' : '🔴' }} *${{ github.repository }}*: ${{ inputs.status == 'success' ? 'Successful' : 'Failed' }} execution of ${{ github.workflow }} by ${{ github.actor }} on branch ${{ github.ref_name }}"
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ inputs.webhook_url }}
