@@ -4,7 +4,36 @@ This GitHub Action takes the status and webhook URL from a previous job and send
 
 ## Usage
 
-Example usage in a workflow:
+Example usage in a workflow that runs inline (eg. reduce GA minutes usage by rolling the notification into the same job as the build and deploy steps):
+
+```yaml
+name: Deploy production
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and deploy
+        run: |
+          # Your build and deploy steps here
+
+      - name: Notify Slack
+        if: always()
+        uses: alleyinteractive/action-notify-slack@main
+        with:
+          status: ${{ job.status }}
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+```
+
+Example usage in a workflow as a separate job for purists who like to keep their jobs separate:
 
 ```yaml
 name: Deploy production
