@@ -16,7 +16,7 @@ runs:
       with:
         payload: |
           {
-            "text": "${{ inputs.status == 'success' ? '🟢' : '🔴' }} *${{ github.repository }}*: ${{ inputs.status == 'success' ? 'Successful' : 'Failed' }} execution of ${{ github.workflow }} by ${{ github.actor }} on branch ${{ github.ref_name }}"
+            "text": "${{ (inputs.status == 'success' && '🟢') || '🔴' }} *${{ github.repository }}*: ${{ (inputs.status == 'success' && 'Successful') || 'Failed' }} execution of ${{ github.workflow }} by ${{ github.actor }} on branch ${{ github.ref_name }}"
           }
       env:
         SLACK_WEBHOOK_URL: ${{ inputs.webhook_url }}
