@@ -53,7 +53,7 @@ jobs:
     if: always() # Ensures notification regardless of build outcome
     steps:
       - name: Notify Slack
-        uses: alleyinteractive/action-notify-slack@main
+        uses: alleyinteractive/action-notify-slack@develop
         with:
           status: ${{ needs.build_and_deploy.result }}
           webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
