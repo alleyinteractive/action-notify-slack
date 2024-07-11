@@ -27,7 +27,7 @@ jobs:
 
       - name: Notify Slack
         if: always()
-        uses: alleyinteractive/action-notify-slack@main
+        uses: alleyinteractive/action-notify-slack@develop
         with:
           status: ${{ job.status }}
           webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
